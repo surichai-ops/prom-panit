@@ -55,6 +55,454 @@
   <script src="https://cdn.jsdelivr.net/npm/three/build/three.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/@photo-sphere-viewer/core/index.js"></script>
 
+  <!-- Premium Effects Styles -->
+  <style>
+    /* Animated Background Particles */
+    .particles-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .particle {
+      position: absolute;
+      width: 4px;
+      height: 4px;
+      background: radial-gradient(circle, rgba(107, 143, 255, 0.8), transparent);
+      border-radius: 50%;
+      animation: float-particle linear infinite;
+    }
+
+    @keyframes float-particle {
+      0% {
+        transform: translateY(100vh) scale(0);
+        opacity: 0;
+      }
+      10% {
+        opacity: 1;
+      }
+      90% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-100vh) scale(1);
+        opacity: 0;
+      }
+    }
+
+    /* Animated Gradient Mesh */
+    .gradient-mesh {
+      position: fixed;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background:
+        radial-gradient(circle at 20% 50%, rgba(13, 22, 153, 0.2) 0%, transparent 50%),
+        radial-gradient(circle at 80% 80%, rgba(59, 79, 216, 0.2) 0%, transparent 50%),
+        radial-gradient(circle at 40% 20%, rgba(107, 143, 255, 0.15) 0%, transparent 50%);
+      animation: mesh-rotate 20s ease-in-out infinite;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    @keyframes mesh-rotate {
+      0%, 100% {
+        transform: rotate(0deg) scale(1);
+      }
+      50% {
+        transform: rotate(180deg) scale(1.1);
+      }
+    }
+
+    /* Floating Decorative Elements */
+    .floating-shape {
+      position: fixed;
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.15;
+      animation: float-shape 15s ease-in-out infinite;
+    }
+
+    @keyframes float-shape {
+      0%, 100% {
+        transform: translate(0, 0) rotate(0deg);
+      }
+      33% {
+        transform: translate(30px, -30px) rotate(120deg);
+      }
+      66% {
+        transform: translate(-20px, 20px) rotate(240deg);
+      }
+    }
+
+    .shape-1 {
+      top: 10%;
+      left: 5%;
+      width: 100px;
+      height: 100px;
+      background: linear-gradient(135deg, #0d1699, #3b4fd8);
+      border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+      animation-duration: 12s;
+    }
+
+    .shape-2 {
+      top: 60%;
+      right: 10%;
+      width: 150px;
+      height: 150px;
+      background: linear-gradient(135deg, #3b4fd8, #6b8fff);
+      border-radius: 70% 30% 30% 70% / 60% 40% 60% 40%;
+      animation-duration: 18s;
+      animation-delay: -5s;
+    }
+
+    .shape-3 {
+      bottom: 20%;
+      left: 15%;
+      width: 80px;
+      height: 80px;
+      background: linear-gradient(135deg, #6b8fff, #0d1699);
+      border-radius: 50% 50% 50% 50% / 30% 30% 70% 70%;
+      animation-duration: 14s;
+      animation-delay: -8s;
+    }
+
+  /* Loading Screen Styles */
+    .page-loader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #0a1175 0%, #0d1699 25%, #3b4fd8 75%, #6b8fff 100%);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      opacity: 1;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+    }
+
+    .page-loader.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .loader-content {
+      text-align: center;
+      color: white;
+      animation: fadeIn 0.5s ease;
+    }
+
+    .loader-logo {
+      font-size: 5em;
+      margin-bottom: 20px;
+      animation: pulse 1.5s ease-in-out infinite;
+      filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.3));
+    }
+
+    .loader-spinner {
+      width: 70px;
+      height: 70px;
+      border: 5px solid rgba(255, 255, 255, 0.15);
+      border-top: 5px solid white;
+      border-right: 5px solid rgba(255, 255, 255, 0.6);
+      border-radius: 50%;
+      animation: spin 1s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+      margin: 0 auto 30px;
+      box-shadow: 0 0 40px rgba(255, 255, 255, 0.2);
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .loader-text {
+      font-size: 1.5em;
+      font-weight: 700;
+      letter-spacing: 2px;
+      text-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      margin-bottom: 30px;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    .loader-bar {
+      width: 250px;
+      height: 6px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 10px;
+      margin: 0 auto;
+      overflow: hidden;
+      box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+    }
+
+    .loader-progress {
+      height: 100%;
+      background: linear-gradient(90deg, #fff, rgba(255, 255, 255, 0.7));
+      border-radius: 10px;
+      animation: loading 2s ease-in-out infinite;
+      box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+    }
+
+    @keyframes loading {
+      0% { width: 0%; }
+      50% { width: 70%; }
+      100% { width: 100%; }
+    }
+
+    /* Smooth Scroll Button */
+    .scroll-to-top {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, #0d1699, #3b4fd8);
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      box-shadow: 0 8px 20px rgba(13, 22, 153, 0.3);
+      z-index: 1000;
+    }
+
+    .scroll-to-top.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .scroll-to-top:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 30px rgba(13, 22, 153, 0.5);
+    }
+
+    .scroll-to-top::before {
+      content: '↑';
+      font-size: 24px;
+      color: white;
+      font-weight: bold;
+    }
+
+    /* Premium Cursor Effect */
+    .cursor-glow {
+      position: fixed;
+      width: 20px;
+      height: 20px;
+      background: radial-gradient(circle, rgba(59, 79, 216, 0.6), transparent);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      mix-blend-mode: screen;
+      transition: transform 0.15s ease, opacity 0.15s ease;
+      opacity: 0;
+    }
+
+    .cursor-trail {
+      position: fixed;
+      width: 8px;
+      height: 8px;
+      background: rgba(107, 143, 255, 0.3);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9998;
+      transition: transform 0.3s ease;
+    }
+
+    /* Shimmer Effect on Headings */
+    @keyframes shimmer-text {
+      0% {
+        background-position: -200% center;
+      }
+      100% {
+        background-position: 200% center;
+      }
+    }
+
+    .shimmer-text {
+      background: linear-gradient(
+        90deg,
+        var(--accent) 0%,
+        var(--accent-light) 25%,
+        var(--sky) 50%,
+        var(--accent-light) 75%,
+        var(--accent) 100%
+      );
+      background-size: 200% auto;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: shimmer-text 3s linear infinite;
+    }
+
+    /* Tilt Effect Container */
+    .tilt-card {
+      transition: transform 0.3s ease;
+    }
+
+    /* ============================================
+       ❄️ SNOWFALL EFFECT - เอฟเฟกต์หิมะตก
+       ============================================
+       เปิด/ปิด: ลบ comment ด้านล่างเพื่อปิด effect
+    ============================================ */
+
+    .snowflake {
+      position: fixed;
+      top: -10px;
+      color: white;
+      font-size: 1em;
+      user-select: none;
+      pointer-events: none;
+      z-index: 10000;
+      animation: snowfall linear infinite;
+      text-shadow: 0 0 5px rgba(255, 255, 255, 0.8);
+    }
+
+    @keyframes snowfall {
+      0% {
+        transform: translateY(0) translateX(0) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(100vh) translateX(50px) rotate(360deg);
+        opacity: 0.5;
+      }
+    }
+
+    /* Snowflake variations */
+    .snowflake:nth-child(2n) {
+      animation-duration: 12s;
+      font-size: 0.8em;
+    }
+
+    .snowflake:nth-child(3n) {
+      animation-duration: 16s;
+      font-size: 1.2em;
+    }
+
+    .snowflake:nth-child(4n) {
+      animation-duration: 14s;
+      font-size: 0.6em;
+    }
+
+    .snowflake:nth-child(5n) {
+      animation-duration: 18s;
+      font-size: 1.4em;
+    }
+
+    /* ============================================
+       จบ SNOWFALL EFFECT
+       ============================================ */
+
+    /* ============================================
+       🌞🌙 DAY/NIGHT MODE - โหมดกลางวัน/กลางคืน
+       ============================================
+       เปลี่ยนสีอัตโนมัติตามเวลา GMT+7
+       กลางวัน: 06:00-18:00 (สีสว่าง)
+       กลางคืน: 18:00-06:00 (สีเข้ม)
+    ============================================ */
+
+    /* Night Mode Colors */
+    body.night-mode {
+      --bg: #0f1419;
+      --fg: #e8edf2;
+      --accent: #4d7cff;
+      --accent-light: #6b93ff;
+      --sky: #8baeff;
+      --muted: #9ca9b8;
+      --grid: rgba(77, 124, 255, 0.2);
+      --bg-light: #1a1f28;
+      --gradient-primary: linear-gradient(135deg, #2d4a9e 0%, #4d7cff 50%, #6b93ff 100%);
+      --gradient-hero: linear-gradient(135deg, #1a2957 0%, #2d4a9e 25%, #4d7cff 75%, #6b93ff 100%);
+      --gradient-soft: linear-gradient(135deg, rgba(77, 124, 255, 0.1) 0%, rgba(77, 124, 255, 0.05) 100%);
+      --gradient-glow: radial-gradient(circle at 50% 0%, rgba(77, 124, 255, 0.2), transparent 70%);
+    }
+
+    /* Day Mode Colors (default - same as current) */
+    body.day-mode {
+      --bg: #ffffff;
+      --fg: #1a2332;
+      --accent: #0d1699;
+      --accent-light: #3b4fd8;
+      --sky: #6b8fff;
+      --muted: #64748b;
+      --grid: rgba(13, 22, 153, 0.15);
+      --bg-light: #f8faff;
+    }
+
+    /* Smooth transition between modes */
+    body {
+      transition: background-color 1s ease, color 1s ease;
+    }
+
+    * {
+      transition: background-color 0.5s ease, color 0.5s ease, border-color 0.5s ease;
+    }
+
+    /* Time Indicator Badge */
+    .time-mode-indicator {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 12px 20px;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50px;
+      color: white;
+      font-weight: 600;
+      font-size: 0.9em;
+      z-index: 10001;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+      animation: fadeIn 0.5s ease;
+      cursor: pointer;
+      user-select: none;
+      transition: all 0.3s ease;
+    }
+
+    .time-mode-indicator:hover {
+      transform: scale(1.05);
+      background: rgba(255, 255, 255, 0.25);
+      box-shadow: 0 12px 32px rgba(0, 0, 0, 0.3);
+    }
+
+    .time-mode-indicator .icon {
+      font-size: 1.2em;
+      margin-right: 8px;
+      display: inline-block;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    /* Night mode specific adjustments */
+    body.night-mode .gradient-mesh {
+      opacity: 0.7;
+    }
+
+    body.night-mode .floating-shape {
+      opacity: 0.1;
+    }
+
+    body.night-mode .page-loader {
+      background: linear-gradient(135deg, #1a2957 0%, #2d4a9e 25%, #4d7cff 75%, #6b93ff 100%);
+    }
+
+    /* ============================================
+       จบ DAY/NIGHT MODE
+       ============================================ */
+  </style>
+
   <!-- Structured Data (JSON-LD) สำหรับ Google Rich Results -->
   <script type="application/ld+json">
   {
@@ -135,6 +583,40 @@
   </script>
 </head>
 <body>
+  <!-- Premium Cursor Effects -->
+  <div class="cursor-glow" id="cursorGlow"></div>
+  <div class="cursor-trail" id="cursorTrail"></div>
+
+  <!-- Animated Background Effects -->
+  <div class="gradient-mesh"></div>
+  <div class="particles-bg" id="particlesContainer"></div>
+
+  <!-- Floating Decorative Shapes -->
+  <div class="floating-shape shape-1"></div>
+  <div class="floating-shape shape-2"></div>
+  <div class="floating-shape shape-3"></div>
+
+  <!-- Loading Screen -->
+  <div class="page-loader">
+    <div class="loader-content">
+      <div class="loader-logo">🏪</div>
+      <div class="loader-spinner"></div>
+      <div class="loader-text">กำลังโหลด...</div>
+      <div class="loader-bar">
+        <div class="loader-progress"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scroll to Top Button -->
+  <div class="scroll-to-top" id="scrollToTop"></div>
+
+  <!-- Day/Night Mode Indicator -->
+  <div class="time-mode-indicator" id="timeModeIndicator">
+    <span class="icon">🌞</span>
+    <span class="text">กลางวัน</span>
+  </div>
+
   <header class="site-header">
     <div class="header-content">
       <div class="logo-wrapper">
@@ -235,31 +717,10 @@
 
     <section class="promos">
       <h3>🎉 โปรโมชั่นประจำสัปดาห์</h3>
-      <p class="promos-subtitle">ดีลพิเศษสำหรับคุณ อัพเดตทุกสัปดาห์</p>
+      <p class="promos-subtitle">ดีลพิเศษสำหรับคุณ อัพเดตทุกสัปดาห์ • เลื่อนหยุด</p>
       <div class="promo-grid">
-        <div class="promo-card">
-          <div class="promo-badge hot">HOT</div>
-          <div class="promo-icon">🥛</div>
-          <h4>นมสด</h4>
-          <p class="promo-desc">ลดพิเศษ</p>
-        </div>
-        <div class="promo-card">
-          <div class="promo-badge new">NEW</div>
-          <div class="promo-icon">🥚</div>
-          <h4>ชนม</h4>
-          <p class="promo-desc">ราคาดีทุกวัน</p>
-        </div>
-        <div class="promo-card">
-          <div class="promo-badge sale">SALE</div>
-          <div class="promo-icon">🛍️</div>
-          <h4>ซื้อครบ 300 บาท</h4>
-          <p class="promo-desc">ฟรีถุงผ้า</p>
-        </div>
-        <div class="promo-card">
-          <div class="promo-badge special">พิเศษ</div>
-          <div class="promo-icon">🍚</div>
-          <h4>ข้าวหอมมะลิ 5 กก.</h4>
-          <p class="promo-desc">ราคาพิเศษ</p>
+        <div class="promo-grid-wrapper" id="promoCarousel">
+          <!-- Cards will be generated by JavaScript -->
         </div>
       </div>
     </section>
@@ -293,7 +754,554 @@
   </footer>
 
   <script>
+    // ============================================
+    // 🌞🌙 DAY/NIGHT MODE AUTO-SWITCH
+    // ============================================
+    // เปลี่ยนสีอัตโนมัติตามเวลา GMT+7 (เวลาไทย)
+    // กลางวัน: 06:00-18:00
+    // กลางคืน: 18:00-06:00
+    // ============================================
+
+    let isManualOverride = false;
+    let currentMode = 'day';
+
+    function getThailandTime() {
+      // Get current time in GMT+7 (Thailand timezone)
+      const now = new Date();
+      const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+      const thailandTime = new Date(utc + (3600000 * 7));
+      return thailandTime;
+    }
+
+    function updateTimeMode() {
+      if (isManualOverride) return; // Don't auto-switch if manual override
+
+      const thaiTime = getThailandTime();
+      const hours = thaiTime.getHours();
+      const minutes = thaiTime.getMinutes();
+
+      // Determine if day or night
+      // Day: 06:00-17:59
+      // Night: 18:00-05:59
+      const isDay = hours >= 6 && hours < 18;
+      const newMode = isDay ? 'day' : 'night';
+
+      // Only update if mode changed
+      if (newMode !== currentMode) {
+        currentMode = newMode;
+        applyTheme(newMode);
+
+        // Show notification
+        showModeChangeNotification(newMode);
+      }
+
+      // Update indicator
+      updateIndicator(newMode, thaiTime);
+    }
+
+    function applyTheme(mode) {
+      const body = document.body;
+
+      if (mode === 'night') {
+        body.classList.remove('day-mode');
+        body.classList.add('night-mode');
+      } else {
+        body.classList.remove('night-mode');
+        body.classList.add('day-mode');
+      }
+
+      // Store preference
+      localStorage.setItem('lastMode', mode);
+      localStorage.setItem('lastModeTime', Date.now());
+    }
+
+    function updateIndicator(mode, time) {
+      const indicator = document.getElementById('timeModeIndicator');
+      if (!indicator) return;
+
+      const icon = indicator.querySelector('.icon');
+      const text = indicator.querySelector('.text');
+
+      const hours = time.getHours().toString().padStart(2, '0');
+      const minutes = time.getMinutes().toString().padStart(2, '0');
+      const timeString = `${hours}:${minutes}`;
+
+      if (mode === 'night') {
+        icon.textContent = '🌙';
+        text.textContent = `กลางคืน (${timeString})`;
+      } else {
+        icon.textContent = '🌞';
+        text.textContent = `กลางวัน (${timeString})`;
+      }
+    }
+
+    function showModeChangeNotification(mode) {
+      // Create notification element
+      const notification = document.createElement('div');
+      notification.style.cssText = `
+        position: fixed;
+        top: 80px;
+        right: 20px;
+        padding: 16px 24px;
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(20px);
+        border-radius: 12px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+        z-index: 10002;
+        font-weight: 600;
+        color: #1a2332;
+        animation: slideInRight 0.5s ease;
+      `;
+
+      if (mode === 'night') {
+        notification.innerHTML = '🌙 เปลี่ยนเป็นโหมดกลางคืนแล้ว';
+        notification.style.background = 'rgba(30, 40, 60, 0.95)';
+        notification.style.color = '#e8edf2';
+      } else {
+        notification.innerHTML = '🌞 เปลี่ยนเป็นโหมดกลางวันแล้ว';
+      }
+
+      document.body.appendChild(notification);
+
+      // Remove after 3 seconds
+      setTimeout(() => {
+        notification.style.opacity = '0';
+        notification.style.transform = 'translateX(400px)';
+        setTimeout(() => notification.remove(), 500);
+      }, 3000);
+    }
+
+    function toggleManualMode() {
+      isManualOverride = !isManualOverride;
+
+      if (!isManualOverride) {
+        // Reset to auto mode
+        updateTimeMode();
+      } else {
+        // Toggle between day/night
+        const newMode = currentMode === 'day' ? 'night' : 'day';
+        currentMode = newMode;
+        applyTheme(newMode);
+
+        const thaiTime = getThailandTime();
+        updateIndicator(newMode, thaiTime);
+      }
+    }
+
+    // Click indicator to toggle manual override
+    document.addEventListener('DOMContentLoaded', () => {
+      const indicator = document.getElementById('timeModeIndicator');
+      if (indicator) {
+        indicator.addEventListener('click', toggleManualMode);
+        indicator.title = 'คลิกเพื่อสลับโหมดเอง';
+      }
+    });
+
+    // Initialize on load
+    updateTimeMode();
+
+    // Check every minute for time changes
+    setInterval(updateTimeMode, 60000);
+
+    // Also check every 10 seconds for more responsive updates
+    setInterval(() => {
+      const thaiTime = getThailandTime();
+      updateIndicator(currentMode, thaiTime);
+    }, 10000);
+
+    // ============================================
+    // จบ DAY/NIGHT MODE
+    // ============================================
+
+    // ============================================
+    // 🎁 RANDOM PROMOTIONS GENERATOR
+    // ============================================
+    // สร้างโปรโมชั่นแบบ random จากสินค้าจริง
+    // ============================================
+
+    const promotionProducts = [
+      // เครื่องดื่ม
+      { icon: '🥛', name: 'นมสด', desc: 'ลดพิเศษ 10%', badge: 'hot' },
+      { icon: '🧃', name: 'น้ำผลไม้', desc: 'ซื้อ 2 แถม 1', badge: 'sale' },
+      { icon: '🧋', name: 'ชาเขียว', desc: 'ราคาพิเศษ', badge: 'new' },
+      { icon: '☕', name: 'กาแฟสด', desc: 'ลด 15 บาท', badge: 'hot' },
+      { icon: '🥤', name: 'โค้ก เป๊ปซี่', desc: 'ซื้อ 3 ลด 10 บาท', badge: 'sale' },
+
+      // น้ำดื่ม
+      { icon: '💧', name: 'น้ำดื่ม 1.5 ลิตร', desc: 'ราคาถูก', badge: 'special' },
+      { icon: '🍶', name: 'น้ำแร่', desc: 'โปรพิเศษ', badge: 'sale' },
+
+      // ขนม
+      { icon: '🍫', name: 'ช็อกโกแลต', desc: 'ซื้อ 2 แถม 1', badge: 'hot' },
+      { icon: '🍪', name: 'คุกกี้', desc: 'ลด 20%', badge: 'sale' },
+      { icon: '🍬', name: 'ลูกอม', desc: 'ราคาพิเศษ', badge: 'new' },
+      { icon: '🥨', name: 'มันฝรั่ง Lays', desc: 'ซื้อ 1 แถม 1', badge: 'hot' },
+      { icon: '🍿', name: 'ป๊อปคอร์น', desc: 'ลดเหลือ 35 บาท', badge: 'sale' },
+      { icon: '🥜', name: 'ถั่ว', desc: 'โปรพิเศษ', badge: 'special' },
+      { icon: '🍭', name: 'อมยิ้ม', desc: 'ราคาดี', badge: 'new' },
+
+      // เบียร์/เหล้า
+      { icon: '🍺', name: 'เบียร์สิงห์', desc: 'ซื้อ 6 ขวด ลด 30 บาท', badge: 'hot' },
+      { icon: '🍺', name: 'ลีโอ เบียร์', desc: 'โปรพิเศษ', badge: 'sale' },
+      { icon: '🍾', name: 'เหล้าขาว', desc: 'ราคาถูก', badge: 'special' },
+      { icon: '🥃', name: 'เหล้าแม่โขง', desc: 'ลดพิเศษ', badge: 'hot' },
+      { icon: '🍷', name: 'ไวน์', desc: 'โปรใหม่', badge: 'new' },
+
+      // บุหรี่
+      { icon: '🚬', name: 'บุหรี่ มาโบโร่', desc: 'มีครบทุกซอง', badge: 'special' },
+      { icon: '🚬', name: 'บุหรี่ แอลเอ็ม', desc: 'ราคาเท่าเดิม', badge: 'new' },
+      { icon: '🚬', name: 'บุหรี่ ไทยโรจน์', desc: 'พร้อมจำหน่าย', badge: 'hot' },
+
+      // อาหารสด
+      { icon: '🥚', name: 'ไข่ไก่', desc: 'ราคาดีทุกวัน', badge: 'special' },
+      { icon: '🥩', name: 'หมูสด', desc: 'คุณภาพดี', badge: 'new' },
+      { icon: '🐟', name: 'ปลาสด', desc: 'สดใหม่ทุกวัน', badge: 'hot' },
+
+      // ข้าว
+      { icon: '🍚', name: 'ข้าวหอมมะลิ 5 กก.', desc: 'ราคาพิเศษ', badge: 'hot' },
+      { icon: '🍚', name: 'ข้าวสาร 10 กก.', desc: 'ลด 50 บาท', badge: 'sale' },
+      { icon: '🍚', name: 'ข้าวเหนียว', desc: 'โปรพิเศษ', badge: 'special' },
+
+      // น้ำมัน/เครื่องปรุง
+      { icon: '🛢️', name: 'น้ำมันพืช', desc: 'ลด 10 บาท', badge: 'sale' },
+      { icon: '🧂', name: 'เกลือ/น้ำตาล', desc: 'ราคาถูก', badge: 'special' },
+      { icon: '🧄', name: 'กระเทียม/หอม', desc: 'สดใหม่', badge: 'new' },
+      { icon: '🌶️', name: 'พริก/เครื่องปรุง', desc: 'โปรพิเศษ', badge: 'hot' },
+
+      // ของใช้
+      { icon: '🧻', name: 'กระดาษทิชชู่', desc: 'ซื้อ 3 ลด 20 บาท', badge: 'sale' },
+      { icon: '🧴', name: 'ผงซักฟอก', desc: 'ราคาพิเศษ', badge: 'hot' },
+      { icon: '🧽', name: 'ฟองน้ำล้างจาน', desc: 'ลดเหลือ 15 บาท', badge: 'sale' },
+      { icon: '🧼', name: 'สบู่', desc: 'ซื้อ 2 แถม 1', badge: 'hot' },
+      { icon: '🪥', name: 'แปรงสีฟัน', desc: 'โปรพิเศษ', badge: 'new' },
+      { icon: '🧴', name: 'ยาสีฟัน', desc: 'ลด 20%', badge: 'sale' },
+      { icon: '🧴', name: 'แชมพู', desc: 'ราคาถูก', badge: 'special' },
+      { icon: '🧴', name: 'ครีมอาบน้ำ', desc: 'ซื้อ 1 แถม 1', badge: 'hot' },
+
+      // โปรพิเศษ
+      { icon: '🛍️', name: 'ซื้อครบ 300 บาท', desc: 'ฟรีถุงผ้า', badge: 'special' },
+      { icon: '🎁', name: 'ซื้อครบ 500 บาท', desc: 'ลด 50 บาท', badge: 'hot' },
+      { icon: '🎉', name: 'สะสมแต้ม', desc: 'รับของรางวัล', badge: 'new' },
+    ];
+
+    function shuffleArray(array) {
+      const newArray = [...array];
+      for (let i = newArray.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [newArray[i], newArray[j]] = [newArray[j], newArray[i]];
+      }
+      return newArray;
+    }
+
+    function generatePromotions() {
+      const carousel = document.getElementById('promoCarousel');
+      if (!carousel) return;
+
+      // Random เลือก 12 โปรโมชั่น
+      const shuffled = shuffleArray(promotionProducts);
+      const selected = shuffled.slice(0, 12);
+
+      // Duplicate สำหรับ seamless loop
+      const doubled = [...selected, ...selected];
+
+      // สร้าง HTML
+      carousel.innerHTML = doubled.map(promo => `
+        <div class="promo-card">
+          <div class="promo-badge ${promo.badge}">${getBadgeText(promo.badge)}</div>
+          <div class="promo-icon">${promo.icon}</div>
+          <h4>${promo.name}</h4>
+          <p class="promo-desc">${promo.desc}</p>
+        </div>
+      `).join('');
+    }
+
+    function getBadgeText(badge) {
+      const badges = {
+        hot: 'HOT',
+        new: 'NEW',
+        sale: 'SALE',
+        special: 'พิเศษ'
+      };
+      return badges[badge] || 'HOT';
+    }
+
+    // สร้างโปรโมชั่นตอน page load
+    generatePromotions();
+
+    // Refresh โปรโมชั่นทุก 30 วินาที (optional)
+    // setInterval(generatePromotions, 30000);
+
+    // ============================================
+    // จบ RANDOM PROMOTIONS
+    // ============================================
+
+    // ============================================
+    // ❄️ SNOWFALL EFFECT - เอฟเฟกต์หิมะตก
+    // ============================================
+    // เปิด/ปิด: comment บรรทัด createSnowfall(); ด้านล่างเพื่อปิด
+    // ============================================
+
+    function createSnowfall() {
+      const snowContainer = document.body;
+      const snowflakeCount = 50; // จำนวนหิมะ (ปรับได้ 20-100)
+
+      for (let i = 0; i < snowflakeCount; i++) {
+        const snowflake = document.createElement('div');
+        snowflake.className = 'snowflake';
+        snowflake.innerHTML = '❄'; // สัญลักษณ์หิมะ
+
+        // Random position
+        snowflake.style.left = Math.random() * 100 + 'vw';
+
+        // Random delay
+        snowflake.style.animationDelay = Math.random() * 10 + 's';
+
+        // Random duration (10-20s)
+        snowflake.style.animationDuration = (Math.random() * 10 + 10) + 's';
+
+        snowContainer.appendChild(snowflake);
+      }
+    }
+
+    // เรียกใช้งานหิมะตก (comment บรรทัดนี้เพื่อปิด)
+    createSnowfall();
+
+    // ============================================
+    // จบ SNOWFALL EFFECT
+    // ============================================
+
+    // ========================================
+    // Particle System - Premium Background Effect
+    // ========================================
+    function createParticles() {
+      const container = document.getElementById('particlesContainer');
+      const particleCount = 30;
+
+      for (let i = 0; i < particleCount; i++) {
+        const particle = document.createElement('div');
+        particle.className = 'particle';
+
+        // Random position
+        particle.style.left = Math.random() * 100 + '%';
+
+        // Random animation duration (15-30s)
+        const duration = 15 + Math.random() * 15;
+        particle.style.animationDuration = duration + 's';
+
+        // Random delay
+        particle.style.animationDelay = Math.random() * 5 + 's';
+
+        // Random size (2-6px)
+        const size = 2 + Math.random() * 4;
+        particle.style.width = size + 'px';
+        particle.style.height = size + 'px';
+
+        container.appendChild(particle);
+      }
+    }
+
+    // Create particles on load
+    createParticles();
+
+    // ========================================
+    // Premium Cursor Glow Effect
+    // ========================================
+    const cursorGlow = document.getElementById('cursorGlow');
+    const cursorTrail = document.getElementById('cursorTrail');
+    let mouseX = 0, mouseY = 0;
+    let trailX = 0, trailY = 0;
+
+    document.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+
+      cursorGlow.style.opacity = '1';
+      cursorGlow.style.transform = `translate(${mouseX - 10}px, ${mouseY - 10}px)`;
+    });
+
+    document.addEventListener('mouseleave', () => {
+      cursorGlow.style.opacity = '0';
+    });
+
+    // Smooth trail following
+    function animateTrail() {
+      trailX += (mouseX - trailX) * 0.1;
+      trailY += (mouseY - trailY) * 0.1;
+
+      cursorTrail.style.transform = `translate(${trailX - 4}px, ${trailY - 4}px)`;
+
+      requestAnimationFrame(animateTrail);
+    }
+    animateTrail();
+
+    // ========================================
+    // 3D Tilt Effect on Cards
+    // ========================================
+    function addTiltEffect() {
+      const cards = document.querySelectorAll('.product-card, .promo-card, .contact-card');
+
+      cards.forEach(card => {
+        card.addEventListener('mousemove', (e) => {
+          const rect = card.getBoundingClientRect();
+          const x = e.clientX - rect.left;
+          const y = e.clientY - rect.top;
+
+          const centerX = rect.width / 2;
+          const centerY = rect.height / 2;
+
+          const rotateX = (y - centerY) / 10;
+          const rotateY = (centerX - x) / 10;
+
+          card.style.transform = `
+            perspective(1000px)
+            rotateX(${rotateX}deg)
+            rotateY(${rotateY}deg)
+            translateZ(20px)
+            scale(1.05)
+          `;
+        });
+
+        card.addEventListener('mouseleave', () => {
+          card.style.transform = '';
+        });
+      });
+    }
+
+    // ========================================
+    // Scroll Animation - เอฟเฟกต์เมื่อ scroll
+    // ========================================
+    const observerOptions = {
+      threshold: 0.1,
+      rootMargin: '0px 0px -50px 0px'
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.style.opacity = '1';
+          entry.target.style.transform = 'translateY(0)';
+        }
+      });
+    }, observerOptions);
+
+    // ========================================
+    // Page Loading Handler
+    // ========================================
+    window.addEventListener('load', () => {
+      const loader = document.querySelector('.page-loader');
+      const loaderProgress = document.querySelector('.loader-progress');
+
+      // Simulate loading progress
+      let progress = 0;
+      const loadInterval = setInterval(() => {
+        progress += Math.random() * 30;
+        if (progress >= 100) {
+          progress = 100;
+          clearInterval(loadInterval);
+
+          // Hide loader after completion
+          setTimeout(() => {
+            loader.classList.add('hidden');
+
+            // Add entrance animation to body
+            document.body.style.opacity = '0';
+            document.body.style.transition = 'opacity 0.5s ease';
+            setTimeout(() => {
+              document.body.style.opacity = '1';
+            }, 50);
+          }, 300);
+        }
+        loaderProgress.style.width = progress + '%';
+      }, 150);
+    });
+
+    // ========================================
+    // Scroll to Top Button
+    // ========================================
+    const scrollToTopBtn = document.getElementById('scrollToTop');
+
+    window.addEventListener('scroll', () => {
+      if (window.pageYOffset > 300) {
+        scrollToTopBtn.classList.add('visible');
+      } else {
+        scrollToTopBtn.classList.remove('visible');
+      }
+    });
+
+    scrollToTopBtn.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+
+    // ========================================
+    // Parallax Effect for Hero Section
+    // ========================================
+    window.addEventListener('scroll', () => {
+      const scrolled = window.pageYOffset;
+      const header = document.querySelector('.site-header');
+      const heroImg = document.querySelector('.hero-img');
+
+      if (header) {
+        header.style.transform = `translateY(${scrolled * 0.5}px)`;
+        header.style.opacity = 1 - (scrolled / 500);
+      }
+
+      if (heroImg) {
+        heroImg.style.transform = `translateY(${scrolled * 0.15}px) scale(${1 + scrolled * 0.0001})`;
+      }
+    });
+
+    // เมื่อหน้าโหลดเสร็จ
+    document.addEventListener('DOMContentLoaded', () => {
+      // Initialize 3D tilt effect
+      addTiltEffect();
+
+      // Add shimmer effect to promo heading only (not store name)
+      const promoHeading = document.querySelector('.promos h3');
+      if (promoHeading) {
+        promoHeading.classList.add('shimmer-text');
+      }
+
+      // เพิ่ม animation ให้กับทุก section
+      const sections = document.querySelectorAll('section');
+      sections.forEach((section, index) => {
+        section.style.opacity = '0';
+        section.style.transform = 'translateY(30px)';
+        section.style.transition = 'opacity 0.8s ease, transform 0.8s ease';
+        observer.observe(section);
+      });
+
+      // เพิ่ม stagger animation ให้กับ cards
+      const productCards = document.querySelectorAll('.product-card');
+      productCards.forEach((card, index) => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(30px)';
+        card.style.transition = `opacity 0.6s ease ${index * 0.1}s, transform 0.6s ease ${index * 0.1}s`;
+        observer.observe(card);
+      });
+
+      const promoCards = document.querySelectorAll('.promo-card');
+      promoCards.forEach((card, index) => {
+        card.style.opacity = '0';
+        card.style.transform = 'scale(0.9)';
+        card.style.transition = `opacity 0.6s ease ${index * 0.15}s, transform 0.6s ease ${index * 0.15}s`;
+        observer.observe(card);
+      });
+
+      const contactCards = document.querySelectorAll('.contact-card');
+      contactCards.forEach((card, index) => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(30px)';
+        card.style.transition = `opacity 0.6s ease ${index * 0.2}s, transform 0.6s ease ${index * 0.2}s`;
+        observer.observe(card);
+      });
+    });
+
+    // ========================================
     // เริ่มต้นแผนที่ OpenStreetMap
+    // ========================================
     // พิกัดท่าหาดยาว ร้อยเอ็ด (เปลี่ยนเป็นตำแหน่งจริงของร้านได้)
     var map = L.map('map').setView([15.481751, 103.879009], 15);
 

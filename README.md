@@ -12,17 +12,6 @@
 
 Landing page สำหรับร้านพร้อมพาณิชย์ - ร้านชำครบครัน ที่ให้บริการชุมชนใกล้ อบต.ท่าหาดยาว จ.ร้อยเอ็ด
 
-### ✨ Features
-
-- 🗺️ **แผนที่ตำแหน่งร้าน** - OpenStreetMap พร้อม marker
-- 🌐 **มุมมอง 360°** - Photo Sphere Viewer สำหรับชมภายในร้าน
-- 🎯 **SEO Optimized** - พร้อม meta tags, structured data, sitemap
-- 📱 **Responsive Design** - ใช้งานได้ทั้ง desktop และ mobile
-- 🎨 **Modern UI** - Gradient, animations, shadows
-- 🏷️ **Open Graph** - แชร์บน Facebook/LINE/Twitter สวยงาม
-
----
-
 ## 🛠️ Technology Stack
 
 | Component | Technology |
@@ -35,67 +24,6 @@ Landing page สำหรับร้านพร้อมพาณิชย์ 
 | Hosting | GitHub Pages |
 
 ---
-
-## 🚀 Quick Start
-
-### ดูเว็บไซต์
-
-**🌐 Live Demo:** https://USERNAME.github.io/web-me/
-
-### รันในเครื่อง
-
-```bash
-# Clone repository
-git clone https://github.com/USERNAME/web-me.git
-
-# เข้าสู่โฟลเดอร์
-cd web-me
-
-# เปิดไฟล์ในเบราว์เซอร์
-# Windows
-start index.html
-
-# Mac
-open index.html
-
-# Linux
-xdg-open index.html
-```
-
-ไม่ต้องติดตั้งอะไร! เปิดไฟล์ `index.html` ใน browser ได้เลย
-
----
-
-## 📁 โครงสร้างโปรเจค
-
-```
-web-me/
-├── index.html              # หน้าหลัก
-├── styles.css              # Stylesheet หลัก
-├── sitemap.xml             # Sitemap สำหรับ SEO
-├── robots.txt              # กำหนดการเข้าถึงของ search engines
-├── .gitignore              # ไฟล์ที่ไม่ต้อง commit
-├── README.md               # คุณกำลังอ่านอยู่
-├── SEO-GUIDE.md            # คู่มือ SEO
-├── DEPLOY-GUIDE.md         # คู่มือ Deploy
-└── assets/                 # รูปภาพและไฟล์สื่อ
-    ├── logo.svg            # โลโก้ร้าน
-    ├── favicon.png         # Favicon
-    ├── apple-touch-icon.png # iOS icon
-    ├── storefront.jpg      # รูปหน้าร้าน
-    └── 360/
-        └── interior.jpg    # รูปพาโนรามา 360°
-```
-
----
-
-## 📖 Documentation
-
-- 📊 **[SEO Guide](SEO-GUIDE.md)** - คู่มือ SEO ฉบับสมบูรณ์
-- 🚀 **[Deploy Guide](DEPLOY-GUIDE.md)** - วิธี deploy ขึ้น GitHub Pages
-
----
-
 ## 🎯 SEO Features
 
 ### Meta Tags
@@ -123,7 +51,7 @@ web-me/
 - **ชื่อ:** ร้านพร้อมพาณิชย์
 - **ที่อยู่:** ใกล้ อบต.ท่าหาดยาว จ.ร้อยเอ็ด
 - **จุดสังเกต:** ใกล้ร้านไอศวรรย์วัสดุ
-- **เวลาทำการ:** 06:00 - 22:00 น. (ทุกวัน)
+- **เวลาทำการ:** 08:00 - 18:00 น. (ทุกวัน)
 - **โทร:** 08x-xxx-xxxx
 
 ---
@@ -214,29 +142,6 @@ body {
 4. Push to branch (`git push origin feature/AmazingFeature`)
 5. เปิด Pull Request
 
----
-
-## 📝 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-## 👏 Credits
-
-### Libraries & Tools
-- [Leaflet.js](https://leafletjs.com/) - Interactive maps
-- [Photo Sphere Viewer](https://photo-sphere-viewer.js.org/) - 360° panorama viewer
-- [OpenStreetMap](https://www.openstreetmap.org/) - Map data
-- [Noto Sans Thai](https://fonts.google.com/noto/specimen/Noto+Sans+Thai) - Thai web font
-
-### Inspiration
-- Modern landing page design
-- Local business websites
-- Google My Business
-
----
-
 ## 📧 Contact
 
 - **Email:** contact@example.com
@@ -283,5 +188,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ---
 
 **Made with ❤️ in Roi Et, Thailand**
-
 **© 2025 ร้านพร้อมพาณิชย์ - All Rights Reserved**
