@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+
+  <!-- Homepage -->
+  <url>
+    <loc>https://yourdomain.github.io/</loc>
+    <lastmod>2025-01-28</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+
+    <!-- Images for SEO -->
+    <image:image>
+      <image:loc>https://yourdomain.github.io/assets/storefront.jpg</image:loc>
+      <image:title>หน้าร้านพร้อมพาณิชย์ ร้อยเอ็ด</image:title>
+      <image:caption>ร้านพร้อมพาณิชย์ ใกล้ อบต.ท่าหาดยาว จ.ร้อยเอ็ด</image:caption>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://yourdomain.github.io/assets/logo.svg</image:loc>
+      <image:title>โลโก้ร้านพร้อมพาณิชย์</image:title>
+    </image:image>
+
+    <image:image>
+      <image:loc>https://yourdomain.github.io/assets/360/interior.jpg</image:loc>
+      <image:title>มุมมอง 360 องศา ภายในร้านพร้อมพาณิชย์</image:title>
+      <image:caption>ภาพพาโนรามา 360 องศา ภายในร้าน</image:caption>
+    </image:image>
+  </url>
+
+</urlset>

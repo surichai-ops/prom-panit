@@ -1,0 +1,35 @@
+# robots.txt สำหรับร้านพร้อมพาณิชย์
+
+# อนุญาตให้ทุก search engine เข้าถึงทุกหน้า
+User-agent: *
+Allow: /
+
+# ห้ามเข้าถึงโฟลเดอร์เหล่านี้ (ถ้ามี)
+Disallow: /admin/
+Disallow: /private/
+Disallow: /*.json$
+
+# Sitemap location
+Sitemap: https://yourdomain.github.io/sitemap.xml
+
+# Crawl-delay สำหรับ bot ที่ช้า
+User-agent: *
+Crawl-delay: 1
+
+# Google-specific settings
+User-agent: Googlebot
+Allow: /
+Crawl-delay: 0
+
+# Bing-specific settings
+User-agent: Bingbot
+Allow: /
+Crawl-delay: 0
+
+# Facebook crawler
+User-agent: Facebot
+Allow: /
+
+# LINE crawler
+User-agent: Linebot
+Allow: /
